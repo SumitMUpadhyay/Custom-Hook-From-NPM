@@ -1,17 +1,26 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import './index.css';
-import App from './App';
-import reportWebVitals from './reportWebVitals';
+import React, { useState } from 'react'
+import ReactDOM from 'react-dom'
+import {useSpeechRecognition} from 'react-speech-kit'
 
-ReactDOM.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>,
-  document.getElementById('root')
-);
+function App(){
+  const [text,setText]=useState();
 
-// If you want to start measuring performance in your app, pass a function
-// to log results (for example: reportWebVitals(console.log))
-// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
-reportWebVitals();
+  const {listen,stop}=useSpeechRecognition({
+    onResult:result=>setText(result)
+  });
+
+  return(
+    <div>
+      <h2>Converting the Speech to Text...</h2>
+      <textarea value={text}></textarea>
+      <p>
+        <button onClick={listen}>Listen</button>
+        <button onClick={stop}>Stop</button>
+      </p>
+    </div>
+  )
+}
+
+const element=<App></App>
+
+ReactDOM.render(element,document.getElementById("root"));
