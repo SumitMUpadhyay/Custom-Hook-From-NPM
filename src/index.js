@@ -1,26 +1,24 @@
-import React, { useState } from 'react'
-import ReactDOM from 'react-dom'
-import {useSpeechRecognition} from 'react-speech-kit'
+import React from 'react';
+import ReactDOM from 'react-dom';
+import {BrowserRouter, Link, Switch, Route} from 'react-router-dom';
+import Employee from './employee';
+import Department from './department';
+import Project from './project';
 
 function App(){
-  const [text,setText]=useState();
-
-  const {listen,stop}=useSpeechRecognition({
-    onResult:result=>setText(result)
-  });
-
   return(
     <div>
-      <h2>Converting the Speech to Text...</h2>
-      <textarea value={text}></textarea>
-      <p>
-        <button onClick={listen}>Listen</button>
-        <button onClick={stop}>Stop</button>
-      </p>
+      <h2>Welcome to App Component...</h2>
+      <ul>
+        <li><Link to="/employees">Employees</Link></li>
+        <li><Link to="/departments">Departments</Link></li>
+        <li><Link to="/projects">Projects</Link></li>
+      </ul>
+      <Route path="/employees" component={Employee}></Route>
+      <Route path="/departments" component={Department}></Route>
+      <Route path="/projects" component={Project}></Route>
     </div>
   )
 }
 
-const element=<App></App>
-
-ReactDOM.render(element,document.getElementById("root"));
+ReactDOM.render(<BrowserRouter><App></App></BrowserRouter>,document.getElementById("root"));
